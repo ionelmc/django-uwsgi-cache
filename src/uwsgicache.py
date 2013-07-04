@@ -57,6 +57,3 @@ if uwsgi:
 else:
     from django.core.cache.backends.locmem import LocMemCache as UWSGICache
     from django.core.cache.backends import locmem
-
-class CacheClass(UWSGICache):
-    pass
