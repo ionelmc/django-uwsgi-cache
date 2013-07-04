@@ -31,22 +31,26 @@ if uwsgi:
         def exists(self, key):
             return self._cache.cache_exists(smart_str(key), self._server)
 
-        def add(self, key, value, timeout=0):
+        def add(self, key, value, timeout=0, version=None):
+            key = self.make_key(key, version=version)
             if self.exists(key):
                 return False
             return self.set(key, value, timeout, self._server)
 
-        def get(self, key, default=None):
+        def get(self, key, default=None, version=None):
+            key = self.make_key(key, version=version)
             val = self._cache.cache_get(smart_str(key), self._server)
             if val is None:
                 return default
             val = smart_str(val)
             return pickle.loads(val)
 
-        def set(self, key, value, timeout=0):
+        def set(self, key, value, timeout=0, version=None):
+            key = self.make_key(key, version=version)
             self._cache.cache_update(smart_str(key), pickle.dumps(value), timeout, self._server)
 
-        def delete(self, key):
+        def delete(self, key, version=None):
+            key = self.make_key(key, version=version)
             self._cache.cache_del(smart_str(key), self._server)
 
         def close(self, **kwargs):
