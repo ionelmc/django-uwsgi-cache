@@ -5,7 +5,7 @@ import os
 
 setup(
     name = "django-uwsgi-cache",
-    version = "0.1.1",
+    version = "0.2",
     url = 'https://github.com/ionelmc/django-uwsgi-cache',
     download_url = '',
     license = 'BSD',

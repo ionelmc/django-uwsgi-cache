@@ -16,10 +16,6 @@ Installation
         }
     }
 
-or for Django older than 1.3::
-
-    CACHE_BACKEND = "uwsgicache://" # a unix or tcp socket address, leave empty to use local uwsgi
-
 Requirements
 ============
 
