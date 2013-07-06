@@ -19,7 +19,7 @@ Installation
 Requirements
 ============
 
-* Django 1.3 or later
+* Django 1.4 or later
 
 Settings
 ========
