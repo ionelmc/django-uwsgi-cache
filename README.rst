@@ -30,3 +30,9 @@ Settings
 - ``True`` (default) - if uwsgi is not importable this cache backend will alias
   to LocMemCache. Note that south or other mangement commands might try to load
   the cache backend so this is why it's the default.
+
+
+.. image:: https://d2weczhvl823v0.cloudfront.net/ionelmc/django-uwsgi-cache/trend.png
+   :alt: Bitdeli badge
+   :target: https://bitdeli.com/free
+
