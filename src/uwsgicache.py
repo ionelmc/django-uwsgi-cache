@@ -57,7 +57,7 @@ if uwsgi:
             pass
 
         def clear(self):
-            pass
+            self._cache.cache_clear(self._server)
 else:
     from django.core.cache.backends.locmem import LocMemCache as UWSGICache
     from django.core.cache.backends import locmem
