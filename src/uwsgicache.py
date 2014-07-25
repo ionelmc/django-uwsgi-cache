@@ -1,5 +1,5 @@
 """uWSGI cache backend"""
-__version__ = "0.2.0"
+__version__ = "0.3.0"
 
 try:
     from django.utils.encoding import force_bytes as stringify
