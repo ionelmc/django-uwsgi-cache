@@ -1,10 +1,10 @@
 """uWSGI cache backend"""
+__version__ = "0.2.0"
 
-import sys
 try:
-  from django.utils.encoding import force_bytes as stringify
+    from django.utils.encoding import force_bytes as stringify
 except ImportError:
-  from django.utils.encoding import smart_str as stringify
+    from django.utils.encoding import smart_str as stringify
 from django.core.cache.backends.base import BaseCache, InvalidCacheBackendError
 from django.conf import settings
 
@@ -15,7 +15,7 @@ except ImportError:
 
 try:
     import uwsgi
-except:
+except ImportError:
     if getattr(settings, "UWSGI_CACHE_FALLBACK", True):
         uwsgi = None
     else:
@@ -69,4 +69,3 @@ if uwsgi:
             self._cache.cache_clear(self._server)
 else:
     from django.core.cache.backends.locmem import LocMemCache as UWSGICache
-    from django.core.cache.backends import locmem

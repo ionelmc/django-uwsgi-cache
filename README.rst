@@ -1,9 +1,26 @@
-===========================
-    django-uwsgi-cache
-===========================
+===============================
+django-uwsgi-cache
+===============================
 
-Packaging of code from http://uwsgi-docs.readthedocs.org/en/latest/WebCaching.html with some small
-changes.
+.. image:: http://img.shields.io/travis/ionelmc/django-uwsgi-cache/master.png
+    :alt: Travis-CI Build Status
+    :target: https://travis-ci.org/ionelmc/django-uwsgi-cache
+
+.. image:: http://img.shields.io/coveralls/ionelmc/django-uwsgi-cache/master.png
+    :alt: Coverage Status
+    :target: https://coveralls.io/r/ionelmc/django-uwsgi-cache
+
+.. image:: http://img.shields.io/pypi/v/django-uwsgi-cache.png
+    :alt: PYPI Package
+    :target: https://pypi.python.org/pypi/django-uwsgi-cache
+
+.. image:: http://img.shields.io/pypi/dm/django-uwsgi-cache.png
+    :alt: PYPI Package
+    :target: https://pypi.python.org/pypi/django-uwsgi-cache
+
+uWSGI Django cache backend. Origianlly taken from http://uwsgi-docs.readthedocs.org/en/latest/WebCaching.html
+
+* Free software: BSD license
 
 Installation
 ============
@@ -13,6 +30,9 @@ Installation
     CACHES = {
         'default': {
             'BACKEND': 'uwsgicache.UWSGICache',
+
+            # and optionally, if you use a different cache name
+            'LOCATION': 'foobar'
         }
     }
 
@@ -30,9 +50,3 @@ Settings
 - ``True`` (default) - if uwsgi is not importable this cache backend will alias
   to LocMemCache. Note that south or other mangement commands might try to load
   the cache backend so this is why it's the default.
-
-
-.. image:: https://d2weczhvl823v0.cloudfront.net/ionelmc/django-uwsgi-cache/trend.png
-   :alt: Bitdeli badge
-   :target: https://bitdeli.com/free
-

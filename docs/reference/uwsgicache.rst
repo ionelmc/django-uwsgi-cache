@@ -1,0 +1,5 @@
+uwsgicache
+=============================
+
+.. automodule:: uwsgicache
+    :members:
