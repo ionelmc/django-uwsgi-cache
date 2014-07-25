@@ -9,7 +9,7 @@ from process_tests import TestProcess
 from process_tests import TestSocket
 from process_tests import wait_for_strings
 
-TIMEOUT = int(os.getenv('UWSGICACHE_TEST_TIMEOUT', 10))
+TIMEOUT = int(os.getenv('UWSGICACHE_TEST_TIMEOUT', 3))
 
 
 def test_uwsgi():
@@ -38,7 +38,7 @@ def get_ports(pid):
 
 def test_locmem():
     with TestProcess('django-admin.py',
-                     'runserver', '127.0.0.1:0',
+                     'runserver', '127.0.0.1:0', '--traceback', '--noreload', '--nothreading',
                      env=dict(os.environ, UWSGI_CACHE_FALLBACK='y')) as proc:
         with dump_on_error(proc.read):
             wait_for_strings(proc.read, TIMEOUT, '127.0.0.1')
