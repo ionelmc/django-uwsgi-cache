@@ -1,7 +1,11 @@
 """uWSGI cache backend"""
 
+import sys
+if sys.version_info[0] == 3:
+    smart_str = lambda s: s
+else:
+    from django.utils.encoding import smart_str
 from django.core.cache.backends.base import BaseCache, InvalidCacheBackendError
-from django.utils.encoding import smart_str
 from django.conf import settings
 
 try:
@@ -21,6 +25,7 @@ except:
             "to LocMemCache."
         )
 
+
 if uwsgi:
     class UWSGICache(BaseCache):
         def __init__(self, server, params):
@@ -31,7 +36,9 @@ if uwsgi:
         def exists(self, key):
             return self._cache.cache_exists(smart_str(key), self._server)
 
-        def add(self, key, value, timeout=0, version=None):
+        def add(self, key, value, timeout=None, version=None):
+            if timeout is None:
+                timeout = self.default_timeout
             key = self.make_key(key, version=version)
             if self.exists(key):
                 return False
@@ -45,7 +52,9 @@ if uwsgi:
             val = smart_str(val)
             return pickle.loads(val)
 
-        def set(self, key, value, timeout=0, version=None):
+        def set(self, key, value, timeout=None, version=None):
+            if timeout is None:
+                timeout = self.default_timeout
             key = self.make_key(key, version=version)
             self._cache.cache_update(smart_str(key), pickle.dumps(value), timeout, self._server)
 

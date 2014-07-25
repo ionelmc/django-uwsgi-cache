@@ -10,7 +10,7 @@ setup(
     download_url = '',
     license = 'BSD',
     description = "uWSGI cache backend.",
-    long_description = file(os.path.join(os.path.dirname(__file__), 'README.rst')).read(),
+    long_description = open(os.path.join(os.path.dirname(__file__), 'README.rst')).read(),
     maintainer = 'Ionel Cristian Mărieș',
     maintainer_email = 'contact@ionelmc.ro',
     packages = find_packages('src'),
