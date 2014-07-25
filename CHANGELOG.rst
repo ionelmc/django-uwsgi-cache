@@ -1,4 +1,3 @@
-
 Changelog
 =========
 
@@ -7,8 +6,3 @@ Changelog
 
 * Python 3 support (contributed by `Omer Katz <https://github.com/thedrow>`_)
 * Support for ``cache.clean`` (contributed by `laurentpayot <https://github.com/laurentpayot>`_)
-
-0.2.0 (???)
------------
-
-* ???
