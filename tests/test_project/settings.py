@@ -76,4 +76,4 @@ CACHES = {
         'LOCATION': 'foobar'
     }
 }
-UWSGI_CACHE_FALLBACK = False
+UWSGI_CACHE_FALLBACK = os.getenv('UWSGI_CACHE_FALLBACK', False)
