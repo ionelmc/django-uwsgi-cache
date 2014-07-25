@@ -2,6 +2,6 @@
 Authors
 =======
 
-* Ionel Cristian Mărieș - http://blog.ionelmc.ro
-
-... and yet-to-be-named uWSGI devs.
+* `Ionel Cristian Mărieș <http://blog.ionelmc.ro>`_
+* `Riccardo Magliocchetti <https://github.com/ionelmc/django-uwsgi-cache/pull/1>`_
+* `Omer Katz <https://github.com/ionelmc/django-uwsgi-cache/pull/7>`_
