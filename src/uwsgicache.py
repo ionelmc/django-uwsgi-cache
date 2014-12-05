@@ -1,5 +1,5 @@
 """uWSGI cache backend"""
-__version__ = "0.3.0"
+__version__ = "0.3.1"
 
 try:
     from django.utils.encoding import force_bytes as stringify
@@ -43,7 +43,7 @@ if uwsgi:
                 # Django 1.6+: Explicitly passing in timeout=None will set a non-expiring timeout.
                 uwsgi_timeout = 0
             elif timeout is 0:
-				# Django 1.6+: Passing in timeout=0 will set-and-expire-immediately the value.
+                # Django 1.6+: Passing in timeout=0 will set-and-expire-immediately the value.
                 uwsgi_timeout = -1
             key = self.make_key(key, version=version)
             if self.exists(key):
@@ -65,7 +65,7 @@ if uwsgi:
                 # Django 1.6+: Explicitly passing in timeout=None will set a non-expiring timeout.
                 uwsgi_timeout = 0
             elif timeout is 0:
-				# Django 1.6+: Passing in timeout=0 will set-and-expire-immediately the value.
+                # Django 1.6+: Passing in timeout=0 will set-and-expire-immediately the value.
                 uwsgi_timeout = -1
             key = self.make_key(key, version=version)
             self._cache.cache_update(stringify(key), pickle.dumps(value), uwsgi_timeout, self._server)
