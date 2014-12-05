@@ -36,13 +36,19 @@ if uwsgi:
         def exists(self, key):
             return self._cache.cache_exists(stringify(key), self._server)
 
-        def add(self, key, value, timeout=None, version=None):
-            if timeout is None:
-                timeout = self.default_timeout
+        def add(self, key, value, timeout=True, version=None):
+            if timeout is True:
+                uwsgi_timeout = self.default_timeout
+            elif timeout is None or timeout is False:
+                # Django 1.6+: Explicitly passing in timeout=None will set a non-expiring timeout.
+                uwsgi_timeout = 0
+            elif timeout is 0:
+				# Django 1.6+: Passing in timeout=0 will set-and-expire-immediately the value.
+                uwsgi_timeout = -1
             key = self.make_key(key, version=version)
             if self.exists(key):
                 return False
-            return self.set(key, value, timeout, self._server)
+            return self.set(key, value, uwsgi_timeout, self._server)
 
         def get(self, key, default=None, version=None):
             key = self.make_key(key, version=version)
@@ -52,11 +58,17 @@ if uwsgi:
             val = stringify(val)
             return pickle.loads(val)
 
-        def set(self, key, value, timeout=None, version=None):
-            if timeout is None:
-                timeout = self.default_timeout
+        def set(self, key, value, timeout=True, version=None):
+            if timeout is True:
+                uwsgi_timeout = self.default_timeout
+            elif timeout is None or timeout is False:
+                # Django 1.6+: Explicitly passing in timeout=None will set a non-expiring timeout.
+                uwsgi_timeout = 0
+            elif timeout is 0:
+				# Django 1.6+: Passing in timeout=0 will set-and-expire-immediately the value.
+                uwsgi_timeout = -1
             key = self.make_key(key, version=version)
-            self._cache.cache_update(stringify(key), pickle.dumps(value), timeout, self._server)
+            self._cache.cache_update(stringify(key), pickle.dumps(value), uwsgi_timeout, self._server)
 
         def delete(self, key, version=None):
             key = self.make_key(key, version=version)
