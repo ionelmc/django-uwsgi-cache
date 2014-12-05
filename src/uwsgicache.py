@@ -45,6 +45,8 @@ if uwsgi:
             elif timeout is 0:
                 # Django 1.6+: Passing in timeout=0 will set-and-expire-immediately the value.
                 uwsgi_timeout = -1
+            else:
+                uwsgi_timeout = timeout
             key = self.make_key(key, version=version)
             if self.exists(key):
                 return False
@@ -67,6 +69,8 @@ if uwsgi:
             elif timeout is 0:
                 # Django 1.6+: Passing in timeout=0 will set-and-expire-immediately the value.
                 uwsgi_timeout = -1
+            else:
+                uwsgi_timeout = timeout
             key = self.make_key(key, version=version)
             self._cache.cache_update(stringify(key), pickle.dumps(value), uwsgi_timeout, self._server)
 
