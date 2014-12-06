@@ -43,10 +43,6 @@ def test_uwsgi():
             url, = re.findall(r"bound to TCP address (127.0.0.1:\d+) ", proc.read())
             url = "http://" + url
             assertions(url)
-            assert requests.get(url + '/set/1/a').text == 'ok'
-            assert requests.get(url + '/get/1').text == 'a'
-            assert requests.get(url + '/clear').text == 'ok'
-            assert requests.get(url + '/get/1').text == 'None'
 
 
 def get_ports(pid):
