@@ -9,8 +9,14 @@ def get(request, key):
 
 
 def set(request, key, value):
-    cache.set(key, value)
-    print('test_app:set:%s:%s' % (key, value))
+    timeout = request.GET.get('timeout', 'default').lower()
+    if timeout == 'default':
+        cache.set(key, value)
+    elif timeout == 'none':
+        cache.set(key, value, timeout=None)
+    else:
+        cache.set(key, value, timeout=int(timeout))
+    print('test_app:set:%s:%s:%s' % (key, value, timeout))
     return HttpResponse("ok")
 
 
