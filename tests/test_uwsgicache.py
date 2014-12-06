@@ -18,14 +18,16 @@ def assertions(url):
     assert requests.get(url + '/get/1').text == 'a'
     assert requests.get(url + '/clear').text == 'ok'
     assert requests.get(url + '/get/1').text == 'None'
-    assert requests.get(url + '/set/2/b?timeout=1').text == 'ok'
-    time.sleep(0.5)
+    assert requests.get(url + '/set/2/b?timeout=3').text == 'ok'
+    time.sleep(2) # 2 * cache-expire-freq
     assert requests.get(url + '/get/2').text == 'b'
-    time.sleep(0.5)
+    time.sleep(3) # 1 + 2 * cache-expire-freq
     assert requests.get(url + '/get/2').text == 'None'
     assert requests.get(url + '/set/3/c?timeout=0').text == 'ok'
+    time.sleep(2) # 2 * cache-expire-freq
     assert requests.get(url + '/get/3').text == 'None'
     assert requests.get(url + '/set/4/d?timeout=None').text == 'ok'
+    time.sleep(2) # 2 * cache-expire-freq
     assert requests.get(url + '/get/4').text == 'd'
 
 
@@ -33,12 +35,14 @@ def test_uwsgi():
     with TestProcess('uwsgi',
                      '--http-socket', '127.0.0.1:0',
                      '--module', 'test_project.wsgi',
+                     '--master',
+                     '--cache-expire-freq', '1',
                      '--cache2', 'name=foobar,items=10') as proc:
         with dump_on_error(proc.read):
             wait_for_strings(proc.read, TIMEOUT, 'bound to TCP address 127.0.0.1')
             url, = re.findall(r"bound to TCP address (127.0.0.1:\d+) ", proc.read())
             url = "http://" + url
-            #assertions(url)
+            assertions(url)
             assert requests.get(url + '/set/1/a').text == 'ok'
             assert requests.get(url + '/get/1').text == 'a'
             assert requests.get(url + '/clear').text == 'ok'
