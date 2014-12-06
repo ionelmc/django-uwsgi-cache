@@ -13,15 +13,15 @@ from process_tests import wait_for_strings
 TIMEOUT = int(os.getenv('UWSGICACHE_TEST_TIMEOUT', 3))
 
 
-def assertions(url):
+def assertions(url, factor=0.5):
     assert requests.get(url + '/set/1/a').text == 'ok'
     assert requests.get(url + '/get/1').text == 'a'
     assert requests.get(url + '/clear').text == 'ok'
     assert requests.get(url + '/get/1').text == 'None'
-    assert requests.get(url + '/set/2/b?timeout=1').text == 'ok'
-    time.sleep(0.5)
+    assert requests.get(url + '/set/2/b?timeout=' + str(int(factor * 2))).text == 'ok'
+    time.sleep(factor)
     assert requests.get(url + '/get/2').text == 'b'
-    time.sleep(0.5)
+    time.sleep(factor)
     assert requests.get(url + '/get/2').text == 'None'
     assert requests.get(url + '/set/3/c?timeout=0').text == 'ok'
     assert requests.get(url + '/get/3').text == 'None'
@@ -31,6 +31,14 @@ def assertions(url):
 
 def test_uwsgi():
     with TestProcess('uwsgi',
+                     '--master',
+                     '--logdate',
+                     '--log-5xx',
+                     '--single-interpreter',
+                     '--log-zero',
+                     '--log-slow', '1000',
+                     '--cache-report-freed-items',
+                     '--cache-expire-freq', '1',
                      '--http-socket', '127.0.0.1:0',
                      '--module', 'test_project.wsgi',
                      '--cache2', 'name=foobar,items=10') as proc:
@@ -38,7 +46,7 @@ def test_uwsgi():
             wait_for_strings(proc.read, TIMEOUT, 'bound to TCP address 127.0.0.1')
             url, = re.findall(r"bound to TCP address (127.0.0.1:\d+) ", proc.read())
             url = "http://" + url
-            #assertions(url)
+            assertions(url, 1.5)
             assert requests.get(url + '/set/1/a').text == 'ok'
             assert requests.get(url + '/get/1').text == 'a'
             assert requests.get(url + '/clear').text == 'ok'
