@@ -37,24 +37,15 @@ if uwsgi:
             return self._cache.cache_exists(stringify(key), self._server)
 
         def add(self, key, value, timeout=True, version=None):
-            if timeout is True:
-                uwsgi_timeout = self.default_timeout
-            elif timeout is None or timeout is False:
-                # Django 1.6+: Explicitly passing in timeout=None will set a non-expiring timeout.
-                uwsgi_timeout = 0
-            elif timeout is 0:
-                # Django 1.6+: Passing in timeout=0 will set-and-expire-immediately the value.
-                uwsgi_timeout = -1
-            else:
-                uwsgi_timeout = timeout
-            key = self.make_key(key, version=version)
-            if self.exists(key):
+            full_key = self.make_key(key, version=version)
+            if self.exists(full_key):
                 return False
-            return self.set(key, value, uwsgi_timeout, self._server)
+            self.set(key, value, timeout, version)
+            return True
 
         def get(self, key, default=None, version=None):
-            key = self.make_key(key, version=version)
-            val = self._cache.cache_get(stringify(key), self._server)
+            full_key = self.make_key(key, version=version)
+            val = self._cache.cache_get(stringify(full_key), self._server)
             if val is None:
                 return default
             val = stringify(val)
@@ -71,12 +62,12 @@ if uwsgi:
                 uwsgi_timeout = -1
             else:
                 uwsgi_timeout = timeout
-            key = self.make_key(key, version=version)
-            self._cache.cache_update(stringify(key), pickle.dumps(value), uwsgi_timeout, self._server)
+            full_key = self.make_key(key, version=version)
+            self._cache.cache_update(stringify(full_key), pickle.dumps(value), uwsgi_timeout, self._server)
 
         def delete(self, key, version=None):
-            key = self.make_key(key, version=version)
-            self._cache.cache_del(stringify(key), self._server)
+            full_key = self.make_key(key, version=version)
+            self._cache.cache_del(stringify(full_key), self._server)
 
         def close(self, **kwargs):
             pass
