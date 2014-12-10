@@ -9,8 +9,8 @@ Changelog
 0.3.0 (2014-07-25)
 ------------------
 
-* Python 3 support (contributed by Omer Katz)
-* Support for ``cache.clean`` (contributed by Laurent Payot)
+* Python 3 support (contributed by Laurent Payot)
+* Support for ``cache.clear`` (contributed by Omer Katz)
 
 0.? (?)
 -------
