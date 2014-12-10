@@ -61,8 +61,12 @@ def get_ports(pid):
             (get(p) for p in proc.children()),
             [c.laddr[1] for c in proc.connections() if c.status == 'LISTEN' and c.raddr == ()]
         )
-    return get(psutil.Process(pid))[0]
-
+    process = psutil.Process(pid)
+    for _ in range(50):
+        sockets = get(process)
+        if sockets:
+            return sockets[0]
+        time.sleep(0.05)
 
 def test_locmem():
     with TestProcess('django-admin.py',
@@ -73,4 +77,3 @@ def test_locmem():
             port = get_ports(proc.proc.pid)
             url = "http://127.0.0.1:%s" % port
             assertions(url)
-            
