@@ -6,6 +6,7 @@ except ImportError:
 urlpatterns = patterns('test_app.views',
     url('^get/(.*)', 'get'),
     url('^set/(.*)/(.*)', 'set'),
+    url('^add/(.*)/(.*)', 'add'),
     url('^clear', 'clear'),
 )
 

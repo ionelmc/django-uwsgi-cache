@@ -9,10 +9,26 @@ def get(request, key):
 
 
 def set(request, key, value):
-    cache.set(key, value)
-    print('test_app:set:%s:%s' % (key, value))
+    timeout = request.GET.get('timeout', 'default').lower()
+    if timeout == 'default':
+        cache.set(key, value)
+    elif timeout == 'none':
+        cache.set(key, value, timeout=None)
+    else:
+        cache.set(key, value, timeout=int(timeout))
+    print('test_app:set:%s:%s:%s' % (key, value, timeout))
     return HttpResponse("ok")
 
+def add(request, key, value):
+    timeout = request.GET.get('timeout', 'default').lower()
+    if timeout == 'default':
+        result = cache.add(key, value)
+    elif timeout == 'none':
+        result = cache.add(key, value, timeout=None)
+    else:
+        result = cache.add(key, value, timeout=int(timeout))
+    print('test_app:add:%s:%s:%s' % (key, value, timeout))
+    return HttpResponse(result)
 
 def clear(request):
     cache.clear()
