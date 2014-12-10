@@ -18,7 +18,7 @@ django-uwsgi-cache
     :alt: PYPI Package
     :target: https://pypi.python.org/pypi/django-uwsgi-cache
 
-uWSGI Django cache backend. Origianlly taken from http://uwsgi-docs.readthedocs.org/en/latest/WebCaching.html
+uWSGI Django cache backend. Started from a snippet at http://uwsgi-docs.readthedocs.org/en/latest/WebCaching.html
 
 * Free software: BSD license
 
