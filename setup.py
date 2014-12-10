@@ -19,7 +19,7 @@ def read(*names, **kwargs):
 
 setup(
     name="django-uwsgi-cache",
-    version="0.3.0",
+    version="0.3.1",
     license="BSD",
     description="uWSGI Django cache backend",
     long_description="%s\n%s" % (read("README.rst"), re.sub(":obj:`~?(.*?)`", r"``\1``", read("CHANGELOG.rst"))),
