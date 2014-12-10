@@ -40,7 +40,7 @@ if uwsgi:
             full_key = self.make_key(key, version=version)
             if self.exists(full_key):
                 return False
-            self.set(key, value, timeout, version)
+            self._set(full_key, value, timeout)
             return True
 
         def get(self, key, default=None, version=None):
@@ -51,19 +51,22 @@ if uwsgi:
             val = stringify(val)
             return pickle.loads(val)
 
-        def set(self, key, value, timeout=True, version=None):
+        def _set(self, full_key, value, timeout):
             if timeout is True:
                 uwsgi_timeout = self.default_timeout
             elif timeout is None or timeout is False:
                 # Django 1.6+: Explicitly passing in timeout=None will set a non-expiring timeout.
                 uwsgi_timeout = 0
-            elif timeout is 0:
+            elif timeout == 0:
                 # Django 1.6+: Passing in timeout=0 will set-and-expire-immediately the value.
                 uwsgi_timeout = -1
             else:
                 uwsgi_timeout = timeout
-            full_key = self.make_key(key, version=version)
             self._cache.cache_update(stringify(full_key), pickle.dumps(value), uwsgi_timeout, self._server)
+
+        def set(self, key, value, timeout=True, version=None):
+            full_key = self.make_key(key, version=version)
+            self._set(full_key, value, timeout)
 
         def delete(self, key, version=None):
             full_key = self.make_key(key, version=version)
