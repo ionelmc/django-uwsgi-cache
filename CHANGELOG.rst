@@ -1,6 +1,11 @@
 Changelog
 =========
 
+1.0.1 (2015-07-01)
+------------------
+
+* Stop depending explicitly on ``uwsgi`` in ``setup.py`` (helps with development and such).
+
 1.0.0 (2014-12-10)
 ------------------
 
