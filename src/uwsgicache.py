@@ -5,7 +5,7 @@ try:
     from django.utils.encoding import force_bytes as stringify
 except ImportError:
     from django.utils.encoding import smart_str as stringify
-from django.core.cache.backends.base import BaseCache, InvalidCacheBackendError
+from django.core.cache.backends.base import BaseCache, InvalidCacheBackendError, DEFAULT_TIMEOUT
 from django.conf import settings
 
 try:
@@ -52,9 +52,10 @@ if uwsgi:
             return pickle.loads(val)
 
         def _set(self, full_key, value, timeout):
-            if timeout is True:
+            if timeout is True or timeout == DEFAULT_TIMEOUT:
                 uwsgi_timeout = self.default_timeout
-            elif timeout is None or timeout is False:
+
+            if timeout is None or timeout is False:
                 # Django 1.6+: Explicitly passing in timeout=None will set a non-expiring timeout.
                 uwsgi_timeout = 0
             elif timeout == 0:
