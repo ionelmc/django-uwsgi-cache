@@ -1,6 +1,8 @@
 """uWSGI cache backend"""
 __version__ = "1.0.1"
 
+import numbers
+
 try:
     from django.utils.encoding import force_bytes as stringify
 except ImportError:
@@ -60,6 +62,9 @@ if uwsgi:
             elif timeout == 0:
                 # Django 1.6+: Passing in timeout=0 will set-and-expire-immediately the value.
                 uwsgi_timeout = -1
+            elif not isinstance(timeout, numbers.Number):
+                # uWSGI chokes on Django's DEFAULT_TIMEOUT object
+                uwsgi_timeout = self.default_timeout
             else:
                 uwsgi_timeout = timeout
             self._cache.cache_update(stringify(full_key), pickle.dumps(value), uwsgi_timeout, self._server)
