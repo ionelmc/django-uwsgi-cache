@@ -1,53 +1,79 @@
-===============================
-django-uwsgi-cache
-===============================
+========
+Overview
+========
 
-| |docs| |travis| |appveyor| |coveralls| |landscape| |scrutinizer|
-| |version| |downloads| |wheel| |supported-versions| |supported-implementations|
+.. start-badges
+
+.. list-table::
+    :stub-columns: 1
+
+    * - docs
+      - |docs|
+    * - tests
+      - | |travis| |requires|
+        | |coveralls| |codecov|
+        | |landscape| |scrutinizer| |codacy| |codeclimate|
+    * - package
+      - |version| |downloads| |wheel| |supported-versions| |supported-implementations|
 
 .. |docs| image:: https://readthedocs.org/projects/django-uwsgi-cache/badge/?style=flat
     :target: https://readthedocs.org/projects/django-uwsgi-cache
     :alt: Documentation Status
 
-.. |travis| image:: http://img.shields.io/travis/ionelmc/django-uwsgi-cache/master.png?style=flat
+.. |travis| image:: https://travis-ci.org/ionelmc/django-uwsgi-cache.svg?branch=master
     :alt: Travis-CI Build Status
     :target: https://travis-ci.org/ionelmc/django-uwsgi-cache
 
-.. |appveyor| image:: https://ci.appveyor.com/api/projects/status/github/ionelmc/django-uwsgi-cache?branch=master
-    :alt: AppVeyor Build Status
-    :target: https://ci.appveyor.com/project/ionelmc/django-uwsgi-cache
+.. |requires| image:: https://requires.io/github/ionelmc/django-uwsgi-cache/requirements.svg?branch=master
+    :alt: Requirements Status
+    :target: https://requires.io/github/ionelmc/django-uwsgi-cache/requirements/?branch=master
 
-.. |coveralls| image:: http://img.shields.io/coveralls/ionelmc/django-uwsgi-cache/master.png?style=flat
+.. |coveralls| image:: https://coveralls.io/repos/ionelmc/django-uwsgi-cache/badge.svg?branch=master&service=github
     :alt: Coverage Status
     :target: https://coveralls.io/r/ionelmc/django-uwsgi-cache
+
+.. |codecov| image:: https://codecov.io/github/ionelmc/django-uwsgi-cache/coverage.svg?branch=master
+    :alt: Coverage Status
+    :target: https://codecov.io/github/ionelmc/django-uwsgi-cache
 
 .. |landscape| image:: https://landscape.io/github/ionelmc/django-uwsgi-cache/master/landscape.svg?style=flat
     :target: https://landscape.io/github/ionelmc/django-uwsgi-cache/master
     :alt: Code Quality Status
 
-.. |version| image:: http://img.shields.io/pypi/v/django-uwsgi-cache.png?style=flat
+.. |codacy| image:: https://img.shields.io/codacy/REPLACE_WITH_PROJECT_ID.svg?style=flat
+    :target: https://www.codacy.com/app/ionelmc/django-uwsgi-cache
+    :alt: Codacy Code Quality Status
+
+.. |codeclimate| image:: https://codeclimate.com/github/ionelmc/django-uwsgi-cache/badges/gpa.svg
+   :target: https://codeclimate.com/github/ionelmc/django-uwsgi-cache
+   :alt: CodeClimate Quality Status
+
+.. |version| image:: https://img.shields.io/pypi/v/django-uwsgi-cache.svg?style=flat
     :alt: PyPI Package latest release
     :target: https://pypi.python.org/pypi/django-uwsgi-cache
 
-.. |downloads| image:: http://img.shields.io/pypi/dm/django-uwsgi-cache.png?style=flat
+.. |downloads| image:: https://img.shields.io/pypi/dm/django-uwsgi-cache.svg?style=flat
     :alt: PyPI Package monthly downloads
     :target: https://pypi.python.org/pypi/django-uwsgi-cache
 
-.. |wheel| image:: https://pypip.in/wheel/django-uwsgi-cache/badge.png?style=flat
+.. |wheel| image:: https://img.shields.io/pypi/wheel/django-uwsgi-cache.svg?style=flat
     :alt: PyPI Wheel
     :target: https://pypi.python.org/pypi/django-uwsgi-cache
 
-.. |supported-versions| image:: https://pypip.in/py_versions/django-uwsgi-cache/badge.png?style=flat
+.. |supported-versions| image:: https://img.shields.io/pypi/pyversions/django-uwsgi-cache.svg?style=flat
     :alt: Supported versions
     :target: https://pypi.python.org/pypi/django-uwsgi-cache
 
-.. |supported-implementations| image:: https://pypip.in/implementation/django-uwsgi-cache/badge.png?style=flat
-    :alt: Supported imlementations
+.. |supported-implementations| image:: https://img.shields.io/pypi/implementation/django-uwsgi-cache.svg?style=flat
+    :alt: Supported implementations
     :target: https://pypi.python.org/pypi/django-uwsgi-cache
 
-.. |scrutinizer| image:: https://img.shields.io/scrutinizer/g/ionelmc/django-uwsgi-cache/master.png?style=flat
-    :alt: Scrtinizer Status
+.. |scrutinizer| image:: https://img.shields.io/scrutinizer/g/ionelmc/django-uwsgi-cache/master.svg?style=flat
+    :alt: Scrutinizer Status
     :target: https://scrutinizer-ci.com/g/ionelmc/django-uwsgi-cache/
+
+
+.. end-badges
 
 uWSGI Django cache backend.
 

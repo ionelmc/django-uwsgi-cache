@@ -2,6 +2,6 @@
 Usage
 =====
 
-To use django-uwsgi-cache in a project::
+To use Django uWSGI Cache in a project::
 
 	import uwsgicache

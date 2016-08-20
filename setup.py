@@ -1,19 +1,19 @@
 #!/usr/bin/env python
 # -*- encoding: utf-8 -*-
-from __future__ import absolute_import, print_function
+from __future__ import absolute_import
+from __future__ import print_function
 
 import io
-import os
 import re
 from glob import glob
 from os.path import basename
 from os.path import dirname
 from os.path import join
-from os.path import relpath
 from os.path import splitext
 
 from setuptools import find_packages
 from setuptools import setup
+
 
 def read(*names, **kwargs):
     return io.open(
@@ -27,8 +27,11 @@ setup(
     version='1.0.1',
     license='BSD',
     description='uWSGI Django cache backend.',
-    long_description='%s\n%s' % (read('README.rst'), re.sub(':obj:`~?(.*?)`', r'``\1``', read('CHANGELOG.rst'))),
-    author='Ionel Cristian Maries',
+    long_description='%s\n%s' % (
+        re.compile('^.. start-badges.*^.. end-badges', re.M | re.S).sub('', read('README.rst')),
+        re.sub(':[a-z]+:`~?(.*?)`', r'``\1``', read('CHANGELOG.rst'))
+    ),
+    author='Ionel Cristian Mărieș',
     author_email='contact@ionelmc.ro',
     url='https://github.com/ionelmc/django-uwsgi-cache',
     packages=find_packages('src'),

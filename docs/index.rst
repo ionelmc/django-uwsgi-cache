@@ -1,7 +1,6 @@
-Welcome to django-uwsgi-cache's documentation!
-======================================
-
-Contents:
+========
+Contents
+========
 
 .. toctree::
    :maxdepth: 2
