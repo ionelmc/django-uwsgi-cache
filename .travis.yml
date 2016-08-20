@@ -1,55 +1,79 @@
 language: python
-python: 2.7
+python: '3.5'
 sudo: false
 env:
   global:
-    LD_PRELOAD=/lib/x86_64-linux-gnu/libSegFault.so
+    - LD_PRELOAD=/lib/x86_64-linux-gnu/libSegFault.so
+    - SEGFAULT_SIGNALS=all
   matrix:
     - TOXENV=check
-    - TOXENV=2.6-1.4,coveralls
+    - TOXENV=docs
+
+    - TOXENV=2.6-1.4,coveralls,codecov
     - TOXENV=2.6-1.4-nocover
-    - TOXENV=2.6-1.5,coveralls
+    - TOXENV=2.6-1.5,coveralls,codecov
     - TOXENV=2.6-1.5-nocover
-    - TOXENV=2.6-1.6,coveralls
+    - TOXENV=2.6-1.6,coveralls,codecov
     - TOXENV=2.6-1.6-nocover
-    - TOXENV=2.7-1.4,coveralls
+    - TOXENV=2.7-1.10,coveralls,codecov
+    - TOXENV=2.7-1.10-nocover
+    - TOXENV=2.7-1.4,coveralls,codecov
     - TOXENV=2.7-1.4-nocover
-    - TOXENV=2.7-1.5,coveralls
+    - TOXENV=2.7-1.5,coveralls,codecov
     - TOXENV=2.7-1.5-nocover
-    - TOXENV=2.7-1.6,coveralls
+    - TOXENV=2.7-1.6,coveralls,codecov
     - TOXENV=2.7-1.6-nocover
-    - TOXENV=2.7-1.7,coveralls
+    - TOXENV=2.7-1.7,coveralls,codecov
     - TOXENV=2.7-1.7-nocover
-    - TOXENV=2.7-1.8,coveralls
+    - TOXENV=2.7-1.8,coveralls,codecov
     - TOXENV=2.7-1.8-nocover
-    - TOXENV=3.3-1.5,coveralls
+    - TOXENV=2.7-1.9,coveralls,codecov
+    - TOXENV=2.7-1.9-nocover
+    - TOXENV=3.3-1.10,coveralls,codecov
+    - TOXENV=3.3-1.10-nocover
+    - TOXENV=3.3-1.5,coveralls,codecov
     - TOXENV=3.3-1.5-nocover
-    - TOXENV=3.3-1.6,coveralls
+    - TOXENV=3.3-1.6,coveralls,codecov
     - TOXENV=3.3-1.6-nocover
-    - TOXENV=3.3-1.7,coveralls
+    - TOXENV=3.3-1.7,coveralls,codecov
     - TOXENV=3.3-1.7-nocover
-    - TOXENV=3.3-1.8,coveralls
+    - TOXENV=3.3-1.8,coveralls,codecov
     - TOXENV=3.3-1.8-nocover
-    - TOXENV=3.4-1.5,coveralls
+    - TOXENV=3.3-1.9,coveralls,codecov
+    - TOXENV=3.3-1.9-nocover
+    - TOXENV=3.4-1.10,coveralls,codecov
+    - TOXENV=3.4-1.10-nocover
+    - TOXENV=3.4-1.5,coveralls,codecov
     - TOXENV=3.4-1.5-nocover
-    - TOXENV=3.4-1.6,coveralls
+    - TOXENV=3.4-1.6,coveralls,codecov
     - TOXENV=3.4-1.6-nocover
-    - TOXENV=3.4-1.7,coveralls
+    - TOXENV=3.4-1.7,coveralls,codecov
     - TOXENV=3.4-1.7-nocover
-    - TOXENV=3.4-1.8,coveralls
+    - TOXENV=3.4-1.8,coveralls,codecov
     - TOXENV=3.4-1.8-nocover
+    - TOXENV=3.4-1.9,coveralls,codecov
+    - TOXENV=3.4-1.9-nocover
 before_install:
   - python --version
-  - virtualenv --version
-  - pip --version
   - uname -a
   - lsb_release -a
 install:
   - pip install tox
+  - virtualenv --version
+  - easy_install --version
+  - pip --version
+  - tox --version
 script:
   - tox -v
+after_failure:
+  - more .tox/log/* | cat
+  - more .tox/*/log/* | cat
+before_cache:
+  - rm -rf $HOME/.cache/pip/log
+cache:
+  directories:
+    - $HOME/.cache/pip
 notifications:
   email:
     on_success: never
     on_failure: always
-
