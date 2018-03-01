@@ -53,7 +53,7 @@ if uwsgi:
 
         def _set(self, full_key, value, timeout):
             if timeout is True or timeout == DEFAULT_TIMEOUT:
-                uwsgi_timeout = self.default_timeout
+                timeout = self.default_timeout
 
             if timeout is None or timeout is False:
                 # Django 1.6+: Explicitly passing in timeout=None will set a non-expiring timeout.
