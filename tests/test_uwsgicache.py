@@ -3,7 +3,6 @@ import re
 import time
 
 import httpx
-import psutil
 from process_tests import TestProcess
 from process_tests import dump_on_error
 from process_tests import wait_for_strings
@@ -63,18 +62,6 @@ def test_uwsgi():
             assertions(url)
 
 
-def get_ports(pid):
-    def get(proc):
-        return sum((get(p) for p in proc.children()), [c.laddr[1] for c in proc.connections() if c.status == "LISTEN" and c.raddr == ()])
-
-    process = psutil.Process(pid)
-    for _ in range(50):
-        sockets = get(process)
-        if sockets:
-            return sockets[0]
-        time.sleep(0.05)
-
-
 def test_locmem():
     with TestProcess(
         "django-admin",
@@ -86,7 +73,6 @@ def test_locmem():
         env=dict(os.environ, UWSGI_CACHE_FALLBACK="y"),
     ) as proc:
         with dump_on_error(proc.read):
-            wait_for_strings(proc.read, TIMEOUT, "127.0.0.1")
-            port = get_ports(proc.proc.pid)
-            url = f"http://127.0.0.1:{port}"
+            wait_for_strings(proc.read, TIMEOUT, "Starting development server at http://127.0.0.1:")
+            (url,) = re.findall(r"Starting development server at (http://127.0.0.1:\d+)/", proc.read())
             assertions(url)
