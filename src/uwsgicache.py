@@ -31,6 +31,8 @@ __all__ = ["UWSGICache"]
 if uwsgi:
 
     class UWSGICache(BaseCache):
+        pickle_protocol = pickle.HIGHEST_PROTOCOL
+
         def __init__(self, server, params):
             BaseCache.__init__(self, params)
             self._cache = uwsgi
@@ -66,7 +68,7 @@ if uwsgi:
                 uwsgi_timeout = -1
             else:
                 uwsgi_timeout = timeout
-            self._cache.cache_update(stringify(full_key), pickle.dumps(value), uwsgi_timeout, self._server)
+            self._cache.cache_update(stringify(full_key), pickle.dumps(value, self.pickle_protocol), uwsgi_timeout, self._server)
 
         def set(self, key, value, timeout=True, version=None):
             full_key = self.make_key(key, version=version)
