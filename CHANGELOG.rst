@@ -1,6 +1,15 @@
 Changelog
 =========
 
+1.1.0 (2025-10-01)
+------------------
+
+* Fixed bug that occurs when timeout=DEFAULT_TIMEOUT is used.
+  Contributed by György Kiss in `#12 <https://github.com/ionelmc/django-uwsgi-cache/pull/12>`_.
+* Added pickle_protocol class property (defaults to ``pickle.HIGHEST_PROTOCOL``).
+* Django 4.2 or later is required now.
+* Python 3.9 or later is required now.
+
 1.0.1 (2015-07-01)
 ------------------
 
