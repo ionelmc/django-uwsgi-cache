@@ -13,6 +13,7 @@ Overview
       - |github-actions| |coveralls| |codecov|
     * - package
       - |version| |wheel| |supported-versions| |supported-implementations| |commits-since|
+
 .. |docs| image:: https://readthedocs.org/projects/django-uwsgi-cache/badge/?style=flat
     :target: https://readthedocs.org/projects/django-uwsgi-cache/
     :alt: Documentation Status
@@ -74,7 +75,8 @@ Installation
 Requirements
 ============
 
-* Django 1.4 or later
+* Django 4.2 or later.
+* Python 3.9 or later.
 
 Settings
 ========
@@ -82,6 +84,5 @@ Settings
 ``UWSGI_CACHE_FALLBACK``
 
 - ``False`` - raises Exception if ``uwsgi`` cannot be imported.
-- ``True`` (default) - if uwsgi is not importable this cache backend will alias
-  to LocMemCache. Note that south or other mangement commands might try to load
-  the cache backend so this is why it's the default.
+- ``True`` (default) - if ``uwsgi`` is not importable this cache backend will alias to LocMemCache.
+  Note that mangement commands might try to load the cache backend so this is why it's the default.
