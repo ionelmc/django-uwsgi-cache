@@ -1,3 +1,7 @@
+import sys
+
+sys.modules["uwsgi"] = sys
+
 extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.autosummary",

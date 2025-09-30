@@ -1,10 +1,6 @@
 uwsgicache
 ==========
 
-.. testsetup::
-
-    from uwsgicache import *
-
 .. automodule:: uwsgicache
     :members:
     :undoc-members:
