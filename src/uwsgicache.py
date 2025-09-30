@@ -1,12 +1,15 @@
 """uWSGI cache backend"""
+
 __version__ = "1.0.1"
 
 try:
     from django.utils.encoding import force_bytes as stringify
 except ImportError:
     from django.utils.encoding import smart_str as stringify
-from django.core.cache.backends.base import BaseCache, InvalidCacheBackendError, DEFAULT_TIMEOUT
 from django.conf import settings
+from django.core.cache.backends.base import DEFAULT_TIMEOUT
+from django.core.cache.backends.base import BaseCache
+from django.core.cache.backends.base import InvalidCacheBackendError
 
 try:
     import cPickle as pickle
@@ -15,18 +18,18 @@ except ImportError:
 
 try:
     import uwsgi
-except ImportError:
+except ImportError as exc:
     if getattr(settings, "UWSGI_CACHE_FALLBACK", True):
         uwsgi = None
     else:
         raise InvalidCacheBackendError(
-            "You're not running under uWSGI ! "
-            "Set UWSGI_CACHE_FALLBACK=True in settings if you want to fallback "
-            "to LocMemCache."
-        )
+            "You're not running under uWSGI ! Set UWSGI_CACHE_FALLBACK=True in settings if you want to fallback to LocMemCache."
+        ) from exc
 
+__all__ = ["UWSGICache"]
 
 if uwsgi:
+
     class UWSGICache(BaseCache):
         def __init__(self, server, params):
             BaseCache.__init__(self, params)
@@ -49,7 +52,7 @@ if uwsgi:
             if val is None:
                 return default
             val = stringify(val)
-            return pickle.loads(val)
+            return pickle.loads(val)  # noqa: S301
 
         def _set(self, full_key, value, timeout):
             if timeout is True or timeout == DEFAULT_TIMEOUT:
@@ -79,4 +82,4 @@ if uwsgi:
         def clear(self):
             self._cache.cache_clear(self._server)
 else:
-    from django.core.cache.backends.locmem import LocMemCache as UWSGICache # flake8: noqa
+    from django.core.cache.backends.locmem import LocMemCache as UWSGICache
