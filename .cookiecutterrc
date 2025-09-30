@@ -3,9 +3,9 @@
 default_context:
     c_extension_optional: 'no'
     c_extension_support: 'no'
-    codacy: 'yes'
+    codacy: 'no'
     codacy_projectid: '[Get ID from https://app.codacy.com/gh/ionelmc/django-uwsgi-cache/settings]'
-    codeclimate: 'yes'
+    codeclimate: 'no'
     codecov: 'yes'
     command_line_interface: 'no'
     command_line_interface_bin_name: '-'
@@ -32,7 +32,7 @@ default_context:
     repo_main_branch: main
     repo_name: django-uwsgi-cache
     repo_username: ionelmc
-    scrutinizer: 'yes'
+    scrutinizer: 'no'
     setup_py_uses_setuptools_scm: 'no'
     sphinx_docs: 'yes'
     sphinx_docs_hosting: https://django-uwsgi-cache.readthedocs.io/

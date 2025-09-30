@@ -10,7 +10,7 @@ Overview
     * - docs
       - |docs|
     * - tests
-      - |github-actions| |coveralls| |codecov| |scrutinizer| |codacy| |codeclimate|
+      - |github-actions| |coveralls| |codecov|
     * - package
       - |version| |wheel| |supported-versions| |supported-implementations| |commits-since|
 .. |docs| image:: https://readthedocs.org/projects/django-uwsgi-cache/badge/?style=flat
@@ -28,14 +28,6 @@ Overview
 .. |codecov| image:: https://codecov.io/gh/ionelmc/django-uwsgi-cache/branch/main/graphs/badge.svg?branch=main
     :alt: Coverage Status
     :target: https://app.codecov.io/github/ionelmc/django-uwsgi-cache
-
-.. |codacy| image:: https://img.shields.io/codacy/grade/[Get ID from https://app.codacy.com/gh/ionelmc/django-uwsgi-cache/settings].svg
-    :target: https://www.codacy.com/app/ionelmc/django-uwsgi-cache
-    :alt: Codacy Code Quality Status
-
-.. |codeclimate| image:: https://codeclimate.com/github/ionelmc/django-uwsgi-cache/badges/gpa.svg
-   :target: https://codeclimate.com/github/ionelmc/django-uwsgi-cache
-   :alt: CodeClimate Quality Status
 
 .. |version| image:: https://img.shields.io/pypi/v/django-uwsgi-cache.svg
     :alt: PyPI Package latest release
@@ -57,10 +49,6 @@ Overview
     :alt: Commits since latest release
     :target: https://github.com/ionelmc/django-uwsgi-cache/compare/v1.0.1...main
 
-
-.. |scrutinizer| image:: https://img.shields.io/scrutinizer/quality/g/ionelmc/django-uwsgi-cache/main.svg
-    :alt: Scrutinizer Status
-    :target: https://scrutinizer-ci.com/g/ionelmc/django-uwsgi-cache/
 
 
 .. end-badges
