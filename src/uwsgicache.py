@@ -1,20 +1,11 @@
 """uWSGI cache backend"""
 
-__version__ = "1.0.1"
+import pickle
 
-try:
-    from django.utils.encoding import force_bytes as stringify
-except ImportError:
-    from django.utils.encoding import smart_str as stringify
 from django.conf import settings
 from django.core.cache.backends.base import DEFAULT_TIMEOUT
 from django.core.cache.backends.base import BaseCache
 from django.core.cache.backends.base import InvalidCacheBackendError
-
-try:
-    import cPickle as pickle
-except ImportError:
-    import pickle
 
 try:
     import uwsgi
@@ -26,6 +17,7 @@ except ImportError as exc:
             "You're not running under uWSGI ! Set UWSGI_CACHE_FALLBACK=True in settings if you want to fallback to LocMemCache."
         ) from exc
 
+__version__ = "1.0.1"
 __all__ = ["UWSGICache"]
 
 if uwsgi:
@@ -38,25 +30,24 @@ if uwsgi:
             self._cache = uwsgi
             self._server = server
 
-        def exists(self, key):
-            return self._cache.cache_exists(stringify(key), self._server)
+        def _exists(self, key):
+            return self._cache.cache_exists(key, self._server)
 
         def add(self, key, value, timeout=True, version=None):
-            full_key = self.make_key(key, version=version)
-            if self.exists(full_key):
+            key = self.make_and_validate_key(key, version=version)
+            if self._exists(key):
                 return False
-            self._set(full_key, value, timeout)
+            self._set(key, value, timeout)
             return True
 
         def get(self, key, default=None, version=None):
-            full_key = self.make_key(key, version=version)
-            val = self._cache.cache_get(stringify(full_key), self._server)
+            key = self.make_and_validate_key(key, version=version)
+            val = self._cache.cache_get(key, self._server)
             if val is None:
                 return default
-            val = stringify(val)
             return pickle.loads(val)  # noqa: S301
 
-        def _set(self, full_key, value, timeout):
+        def _set(self, key, value, timeout):
             if timeout is True or timeout == DEFAULT_TIMEOUT:
                 timeout = self.default_timeout
 
@@ -68,15 +59,15 @@ if uwsgi:
                 uwsgi_timeout = -1
             else:
                 uwsgi_timeout = timeout
-            self._cache.cache_update(stringify(full_key), pickle.dumps(value, self.pickle_protocol), uwsgi_timeout, self._server)
+            self._cache.cache_update(key, pickle.dumps(value, self.pickle_protocol), uwsgi_timeout, self._server)
 
         def set(self, key, value, timeout=True, version=None):
-            full_key = self.make_key(key, version=version)
-            self._set(full_key, value, timeout)
+            key = self.make_and_validate_key(key, version=version)
+            self._set(key, value, timeout)
 
         def delete(self, key, version=None):
-            full_key = self.make_key(key, version=version)
-            self._cache.cache_del(stringify(full_key), self._server)
+            key = self.make_and_validate_key(key, version=version)
+            self._cache.cache_del(key, self._server)
 
         def close(self, **kwargs):
             pass
