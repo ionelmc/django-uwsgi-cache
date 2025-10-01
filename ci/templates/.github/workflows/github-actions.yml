@@ -55,6 +55,10 @@ jobs:
     - name: test
       run: >
         tox -e {{ '${{ matrix.tox_env }}' }} -v
+    - uses: coverallsapp/github-action@v2
+      with:
+        flag-name: {{ '${{ matrix.name }}' }}
+        parallel: true
   finish:
     needs: test
     if: {{ '${{ always() }}' }}
