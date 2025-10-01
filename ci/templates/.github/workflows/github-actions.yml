@@ -59,6 +59,10 @@ jobs:
       with:
         flag-name: {{ '${{ matrix.name }}' }}
         parallel: true
+    - uses: codecov/codecov-action@v5
+      with:
+        verbose: true
+        token: {{ '${{ secrets.CODECOV_TOKEN }}' }}
   finish:
     needs: test
     if: {{ '${{ always() }}' }}
@@ -67,8 +71,4 @@ jobs:
     - uses: coverallsapp/github-action@v2
       with:
         parallel-finished: true
-    - uses: codecov/codecov-action@v5
-      with:
-        verbose: true
-        token: {% raw %}${{ secrets.CODECOV_TOKEN }}{% endraw %}
 {{ '' }}
