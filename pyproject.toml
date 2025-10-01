@@ -9,7 +9,7 @@ dynamic = [
     "readme",
 ]
 name = "django-uwsgi-cache"
-version = "1.0.1"
+version = "1.1.0"
 license = "BSD-2-Clause"
 license-files = ["LICENSE"]
 description = "uWSGI Django cache backend."

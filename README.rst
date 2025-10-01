@@ -46,9 +46,9 @@ Overview
     :alt: Supported implementations
     :target: https://pypi.org/project/django-uwsgi-cache
 
-.. |commits-since| image:: https://img.shields.io/github/commits-since/ionelmc/django-uwsgi-cache/v1.0.1.svg
+.. |commits-since| image:: https://img.shields.io/github/commits-since/ionelmc/django-uwsgi-cache/v1.1.0.svg
     :alt: Commits since latest release
-    :target: https://github.com/ionelmc/django-uwsgi-cache/compare/v1.0.1...main
+    :target: https://github.com/ionelmc/django-uwsgi-cache/compare/v1.1.0...main
 
 
 

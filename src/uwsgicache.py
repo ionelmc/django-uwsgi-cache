@@ -17,7 +17,7 @@ except ImportError as exc:
             "You're not running under uWSGI ! Set UWSGI_CACHE_FALLBACK=True in settings if you want to fallback to LocMemCache."
         ) from exc
 
-__version__ = "1.0.1"
+__version__ = "1.1.0"
 __all__ = ["UWSGICache"]
 
 if uwsgi:
