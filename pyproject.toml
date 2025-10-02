@@ -109,3 +109,24 @@ force-single-line = true
 
 [tool.ruff.format]
 quote-style = "double"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+norecursedirs = ["migrations"]
+python_files = ["test_*.py", "*_test.py", "tests.py"]
+addopts = [
+    "-ra",
+    "--strict-markers",
+    "--doctest-modules",
+    "--doctest-glob=*.rst",
+    "--ignore=tests/test_app/",
+    "--ignore=tests/test_project/",
+    "--tb=short"
+]
+filterwarnings = [
+    "error"
+    # You can add exclusions here, for example:
+    # "ignore:'uwsgicache' defines default_app_config:PendingDeprecationWarning::",
+    # "ignore:The {{% if:::",
+    # "ignore:Coverage disabled via --no-cov switch!"
+]
